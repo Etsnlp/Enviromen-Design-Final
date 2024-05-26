@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+    public ObjectiveManager objectiveManager;
 
     void Start()
     {
@@ -21,6 +22,10 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        if (objectiveManager != null)
+        {
+            objectiveManager.EnemyKilled();
+        }
         Destroy(gameObject);
     }
 }

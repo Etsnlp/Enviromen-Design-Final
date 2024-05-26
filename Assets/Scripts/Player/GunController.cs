@@ -43,7 +43,7 @@ public class GunController : MonoBehaviour
         
         if (hit.collider != null)
         {
-            EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
+            Enemy enemyHealth = hit.collider.GetComponent<Enemy>();
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(attackDamage);

@@ -4,7 +4,7 @@ using TMPro;
 
 public class EnemyHealthBar : MonoBehaviour
 {
-    public EnemyHealth enemyHealth;
+    public Enemy enemyHealth;
     public Slider healthSlider;
     public TMP_Text healthText;
 
