@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
-    public float currentHealth; // currentHealth özelliğini public olarak tanımlayın
+    public float currentHealth;
 
     void Start()
     {
@@ -21,7 +21,6 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        // Düşmanın ölümüyle ilgili işlemler burada yapılır
         Destroy(gameObject);
     }
 }

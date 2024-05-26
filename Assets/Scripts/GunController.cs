@@ -6,7 +6,7 @@ public class GunController : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 20f;
     public float fireRate = 0.5f;
-    public float attackDamage = 20f; // Silahın düşmana verdiği hasar miktarı
+    public float attackDamage = 20f;
     public Camera playerCamera;
 
     private float nextFireTime = 0f;
@@ -39,11 +39,17 @@ public class GunController : MonoBehaviour
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             rb.velocity = direction.normalized * bulletSpeed;
         }
-        EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
-        if (enemyHealth != null)
+
+        
+        if (hit.collider != null)
         {
-            enemyHealth.TakeDamage(attackDamage);
-        }
+            EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(attackDamage);
+            }
+}
+       
 }
 
 }

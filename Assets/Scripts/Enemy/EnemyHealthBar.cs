@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemyHealthBar : MonoBehaviour
 {
     public EnemyHealth enemyHealth;
     public Slider healthSlider;
+    public TMP_Text healthText;
 
     void Start()
     {
@@ -20,15 +22,22 @@ public class EnemyHealthBar : MonoBehaviour
             return;
         }
 
+        if (healthText == null)
+        {
+            Debug.LogError("HealthText component is not assigned.");
+            return;
+        }
+
         healthSlider.maxValue = enemyHealth.maxHealth;
         healthSlider.value = enemyHealth.currentHealth;
     }
 
     void Update()
     {
-        if (enemyHealth != null && healthSlider != null)
+        if (enemyHealth != null && healthSlider != null && healthText != null)
         {
             healthSlider.value = enemyHealth.currentHealth;
+            healthText.text = "Health: " + enemyHealth.currentHealth.ToString();
         }
     }
 }
