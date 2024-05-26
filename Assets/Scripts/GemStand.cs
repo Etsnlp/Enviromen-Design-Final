@@ -8,7 +8,7 @@ public class GemStand : MonoBehaviour
     public TextMeshProUGUI interactionText; // Ekranda gösterilecek yazı
 
     private int currentGemCount = 0; // Şu anda yerleştirilen mücevher sayısı
-    private bool isPlayerNear = false; // Oyuncu yakında mı?
+    public bool isPlayerNear = false; // Oyuncu yakında mı?
 
     private ObjectPickup objectPickup; // Oyuncunun pickup scripti referansı
 
@@ -38,8 +38,7 @@ public class GemStand : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNear = true;
-            //interactionText.enabled = true;
-            //interactionText.text = "Mücevheri yerleştirmek için E tuşuna bas";
+            objectPickup.dropNormal = false;
         }
     }
 
@@ -47,6 +46,7 @@ public class GemStand : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            objectPickup.dropNormal = true;
             isPlayerNear = false;
             interactionText.enabled = false;
         }

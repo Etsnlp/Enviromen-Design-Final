@@ -11,12 +11,21 @@ public class ObjectPickup : MonoBehaviour
     public TextMeshProUGUI dropText; // Ekranda gösterilecek "Objeyi bırakmak için E tuşuna bas" yazısı
     private GameObject heldObject; // Şu anda elde tutulan nesne
     private GameObject player;
+    public bool dropNormal = true;
+
+    private GemStand gemStand;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pickupText.enabled = false; // Yazıyı başlangıçta devre dışı bırak
         dropText.enabled = false; // Yazıyı başlangıçta devre dışı bırak
+
+        GameObject Stand = GameObject.FindGameObjectWithTag("Stand");
+        if (Stand != null)
+        {
+            gemStand = player.GetComponent<GemStand>();
+        }
     }
 
     void Update()
@@ -41,7 +50,10 @@ public class ObjectPickup : MonoBehaviour
             }
             else
             {
-                DropObject(holdPoint.position); // Objeyi eldeki pozisyona bırak
+                if (dropNormal)
+                {
+                    DropObjectNormal(); 
+                }
             }
         }
     }
@@ -144,6 +156,37 @@ public class ObjectPickup : MonoBehaviour
             heldObject.transform.parent = null;
             heldObject = null;
             dropText.enabled = false; // "Objeyi bırakmak için E tuşuna bas" yazısını devre dışı bırak
+        }
+    }
+
+    void DropObjectNormal()
+    {
+        if (heldObject != null)
+        {
+            Rigidbody rb = heldObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+            }
+            Collider col = heldObject.GetComponent<Collider>();
+            if (col != null)
+            {
+                col.enabled = true;
+            }
+
+            Vector3 dropPosition = transform.position + transform.forward * dropDistance;
+
+            RaycastHit hit;
+            if (Physics.Raycast(dropPosition, Vector3.down, out hit))
+            {
+                dropPosition.y = hit.point.y + col.bounds.extents.y + 1f; 
+            }
+
+            heldObject.transform.position = dropPosition;
+            heldObject.transform.rotation = Quaternion.identity; 
+            heldObject.transform.parent = null;
+            heldObject = null;
+            dropText.enabled = false;
         }
     }
 

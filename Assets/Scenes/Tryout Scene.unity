@@ -384,6 +384,7 @@ MonoBehaviour:
   dropHeightOffset: 0.5
   pickupText: {fileID: 258949019}
   dropText: {fileID: 764968186}
+  dropNormal: 1
 --- !u!1 &764968184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,12 +1245,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1697451146}
     - target: {fileID: 1801469212386485990, guid: b421e3002c947344a9960a8ea4e492e1, type: 3}
+      propertyPath: isPlayerNear
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801469212386485990, guid: b421e3002c947344a9960a8ea4e492e1, type: 3}
       propertyPath: interactionText
       value: 
       objectReference: {fileID: 1788287187}
     - target: {fileID: 1801469212386485991, guid: b421e3002c947344a9960a8ea4e492e1, type: 3}
       propertyPath: m_Name
       value: Gem Stand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801469212386485991, guid: b421e3002c947344a9960a8ea4e492e1, type: 3}
+      propertyPath: m_TagString
+      value: Stand
       objectReference: {fileID: 0}
     - target: {fileID: 1801469212386485994, guid: b421e3002c947344a9960a8ea4e492e1, type: 3}
       propertyPath: m_RootOrder
