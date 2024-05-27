@@ -9,6 +9,7 @@ public class ObjectiveTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             objectiveManager.enabled = true;
+            Destroy(this.gameObject);
         }
     }
 }

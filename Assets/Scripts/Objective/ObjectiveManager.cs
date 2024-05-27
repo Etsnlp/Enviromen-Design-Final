@@ -12,6 +12,7 @@ public class ObjectiveManager : MonoBehaviour
     private int enemiesKilled = 0;
 
     public GameObject reward; 
+    public GameObject exit;
 
     void Start()
     {
@@ -52,5 +53,6 @@ public class ObjectiveManager : MonoBehaviour
     void SpawnReward()
     {
         reward.SetActive(true); 
+        exit.SetActive(true);
     }
 }

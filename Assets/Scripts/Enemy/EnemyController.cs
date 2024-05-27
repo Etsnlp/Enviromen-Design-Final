@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     public float attackRange = 1.5f;
     public float attackDamage = 10f;
     public float attackRate = 1f;
-    public float distanceToAttack = 5f; // Düşmanın saldırmak için hedefe olan maksimum uzaklığı
+    public float distanceToAttack = 5f; 
 
     private float nextAttackTime = 0f;
 
@@ -21,14 +21,11 @@ public class EnemyController : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-        // Hedefe doğru ilerle
         if (distanceToTarget <= distanceToAttack)
         {
             transform.LookAt(target.position);
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-
-        // Hedefe saldır
         if (distanceToTarget <= attackRange && Time.time >= nextAttackTime)
         {
             Attack();
@@ -38,10 +35,6 @@ public class EnemyController : MonoBehaviour
 
     void Attack()
     {
-        // Hedefe hasar verme işlemi buraya eklenebilir
         Debug.Log("Enemy attacked!");
-
-        // Örneğin:
-        // target.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
     }
 }

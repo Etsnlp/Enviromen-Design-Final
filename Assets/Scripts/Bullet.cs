@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float damage = 10f;
     public float lifetime = 1f;
 
     void Start()
@@ -10,9 +9,16 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    void OnCollisionEnter(Collision collision)
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     Debug.Log("Bullet hit: " + collision.gameObject.name);
+    //     Destroy(this.gameObject);
+    // }
+
+    void OnTriggerStay(Collider other) 
     {
-        Debug.Log("Bullet hit: " + collision.gameObject.name);
+        Debug.Log("Bullet hit: " + other.gameObject.name);
         Destroy(this.gameObject);
+        
     }
 }
