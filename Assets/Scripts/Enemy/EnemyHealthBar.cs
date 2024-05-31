@@ -4,40 +4,52 @@ using TMPro;
 
 public class EnemyHealthBar : MonoBehaviour
 {
-    public Enemy enemyHealth;
-    public Slider healthSlider;
-    public TMP_Text healthText;
+    [SerializeField] private Enemy enemyHealth; // Burada Enemy bileşenini atıyoruz
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private TMP_Text healthText;
 
-    void Start()
+    private void Awake()
     {
         if (enemyHealth == null)
         {
-            Debug.LogError("EnemyHealth component is not assigned.");
+            Debug.LogError("Enemy component is not assigned.");
+            enabled = false;
             return;
         }
 
         if (healthSlider == null)
         {
             Debug.LogError("HealthSlider component is not assigned.");
+            enabled = false;
             return;
         }
 
         if (healthText == null)
         {
             Debug.LogError("HealthText component is not assigned.");
+            enabled = false;
             return;
         }
 
-        healthSlider.maxValue = enemyHealth.maxHealth;
-        healthSlider.value = enemyHealth.currentHealth;
+        healthSlider.maxValue = enemyHealth.MaxHealth; // MaxHealth özelliğini kullanıyoruz
     }
 
-    void Update()
+    private void Start()
     {
-        if (enemyHealth != null && healthSlider != null && healthText != null)
+        UpdateHealthBar();
+    }
+
+    private void Update()
+    {
+        UpdateHealthBar();
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (enemyHealth != null)
         {
-            healthSlider.value = enemyHealth.currentHealth;
-            healthText.text = "Health: " + enemyHealth.currentHealth.ToString();
+            healthSlider.value = enemyHealth.CurrentHealth; // CurrentHealth özelliğini kullanıyoruz
+            healthText.text = "Health: " + enemyHealth.CurrentHealth.ToString();
         }
     }
 }

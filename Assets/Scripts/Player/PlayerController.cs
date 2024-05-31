@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10.0f;
-    public float mouseSensitivity = 100.0f;
+    [SerializeField] private float speed = 10.0f;
+    [SerializeField] private float mouseSensitivity = 100.0f;
 
     private CharacterController characterController;
     private Transform cameraTransform;
     private float verticalVelocity;
-    private float gravity = 9.81f;
-
+    private const float gravity = 9.81f;
     private float pitch = 0.0f;
 
-    void Start()
+    private void Start()
     {
         characterController = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
@@ -20,34 +19,34 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    private void Update()
     {
         Move();
         LookAround();
     }
 
-    void Move()
+    private void Move()
     {
-        float moveDirectionY = verticalVelocity;
         float moveDirectionX = Input.GetAxis("Horizontal") * speed;
         float moveDirectionZ = Input.GetAxis("Vertical") * speed;
 
         Vector3 move = transform.right * moveDirectionX + transform.forward * moveDirectionZ;
-        move.y = moveDirectionY;
 
-        characterController.Move(move * Time.deltaTime);
-
-        if (characterController.isGrounded && verticalVelocity < 0)
+        if (characterController.isGrounded)
         {
-            verticalVelocity = -2f;
+            verticalVelocity = -2f; // Ensures the player stays grounded
         }
         else
         {
             verticalVelocity -= gravity * Time.deltaTime;
         }
+
+        move.y = verticalVelocity;
+
+        characterController.Move(move * Time.deltaTime);
     }
 
-    void LookAround()
+    private void LookAround()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;

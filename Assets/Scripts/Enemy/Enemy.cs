@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public ObjectiveManager objectiveManager;
+    [SerializeField] private float maxHealth = 100f;
+    private float currentHealth;
+    public ObjectiveManager ObjectiveManager { get; set; } // ObjectiveManager property
 
-    void Start()
+    public float MaxHealth { get { return maxHealth; } } // MaxHealth özelliği
+    public float CurrentHealth { get { return currentHealth; } } // CurrentHealth özelliği
+
+    private void Start()
     {
         currentHealth = maxHealth;
     }
@@ -20,11 +23,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Die()
+    private void Die()
     {
-        if (objectiveManager != null)
+        if (ObjectiveManager != null)
         {
-            objectiveManager.EnemyKilled();
+            ObjectiveManager.EnemyKilled();
         }
         Destroy(gameObject);
     }

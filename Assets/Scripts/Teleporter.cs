@@ -2,26 +2,41 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-    public Transform targetLocation; 
+    [SerializeField] private Transform targetLocation; 
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Player"))
         {
-            CharacterController controller = other.GetComponent<CharacterController>();
-            if (controller != null)
-            {
-                controller.enabled = false; 
-                other.transform.position = targetLocation.position;
-                controller.enabled = true; 
-            }
-            else
-            {
-                other.transform.position = targetLocation.position;
-            }
+            Teleport(other);
+        }
+    }
 
-            other.transform.rotation = targetLocation.rotation;
+    private void Teleport(Collider player)
+    {
+        CharacterController controller = player.GetComponent<CharacterController>();
+        if (controller != null)
+        {
+            controller.enabled = false;
+            MovePlayer(player);
+            controller.enabled = true;
+        }
+        else
+        {
+            MovePlayer(player);
+        }
+    }
+
+    private void MovePlayer(Collider player)
+    {
+        if (targetLocation != null)
+        {
+            player.transform.position = targetLocation.position;
+            player.transform.rotation = targetLocation.rotation;
+        }
+        else
+        {
+            Debug.LogWarning("Target location is not set.");
         }
     }
 }

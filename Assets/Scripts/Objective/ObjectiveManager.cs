@@ -3,24 +3,25 @@ using System.Collections;
 
 public class ObjectiveManager : MonoBehaviour
 {
-    public GameObject enemyPrefab; 
-    public Transform[] spawnPoints;
-    public float spawnInterval = 2f; 
-    public int totalEnemiesToSpawn = 16; 
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private float spawnInterval = 2f;
+    [SerializeField] private int totalEnemiesToSpawn = 16;
 
-    private int enemiesSpawned = 0;
-    private int enemiesKilled = 0;
+    [SerializeField] private GameObject reward;
+    [SerializeField] private GameObject exit;
 
-    public GameObject reward; 
-    public GameObject exit;
+    private int enemiesSpawned;
+    private int enemiesKilled;
 
-    void Start()
+    private void Start()
     {
-        reward.SetActive(false); 
+        reward.SetActive(false);
+        exit.SetActive(false);
         StartCoroutine(SpawnEnemies());
     }
 
-    IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
         while (enemiesSpawned < totalEnemiesToSpawn)
         {
@@ -30,14 +31,13 @@ public class ObjectiveManager : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
         GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        Enemy enemyScript = enemy.GetComponent<Enemy>();
-        if (enemyScript != null)
+        if (enemy.TryGetComponent(out Enemy enemyScript))
         {
-            enemyScript.objectiveManager = this; 
+            enemyScript.ObjectiveManager = this;
         }
     }
 
@@ -50,9 +50,9 @@ public class ObjectiveManager : MonoBehaviour
         }
     }
 
-    void SpawnReward()
+    private void SpawnReward()
     {
-        reward.SetActive(true); 
+        reward.SetActive(true);
         exit.SetActive(true);
     }
 }

@@ -3,77 +3,96 @@ using TMPro;
 
 public class GemStand : MonoBehaviour
 {
-    public Transform[] gemPositions; // Mücevherlerin yerleştirileceği pozisyonlar
-    public GameObject exitDoor; // Çıkış kapısı
-    public TextMeshProUGUI interactionText; // Ekranda gösterilecek yazı
+    [SerializeField] private Transform[] gemPositions; 
+    [SerializeField] private GameObject exitDoor; 
+    [SerializeField] private TextMeshProUGUI interactionText; 
 
-    private int currentGemCount = 0; // Şu anda yerleştirilen mücevher sayısı
-    public bool isPlayerNear = false; // Oyuncu yakında mı?
+    private int currentGemCount = 0; 
+    private bool isPlayerNear = false; 
+    private ObjectPickup objectPickup; 
 
-    private ObjectPickup objectPickup; // Oyuncunun pickup scripti referansı
-
-    void Start()
+    private void Start()
     {
-        interactionText.enabled = false; // Yazıyı başlangıçta devre dışı bırak
-        exitDoor.SetActive(false); // Kapıyı başlangıçta kapalı yap
+        interactionText.enabled = false; 
+        exitDoor.SetActive(false); 
 
-        // Oyuncunun pickup scriptini bul
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             objectPickup = player.GetComponent<ObjectPickup>();
+            if (objectPickup == null)
+            {
+                Debug.LogError("ObjectPickup component is not found on the player.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Player object is not found.");
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && objectPickup.GetHeldObject() != null)
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && objectPickup != null && objectPickup.GetHeldObject() != null)
         {
             PlaceGem();
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isPlayerNear = true;
-            objectPickup.dropNormal = false;
+            if (objectPickup != null)
+            {
+                objectPickup.dropNormal = false;
+            }
+            interactionText.enabled = true; 
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            objectPickup.dropNormal = true;
             isPlayerNear = false;
-            interactionText.enabled = false;
+            if (objectPickup != null)
+            {
+                objectPickup.dropNormal = true;
+            }
+            interactionText.enabled = false; 
         }
     }
 
-    void PlaceGem()
+    private void PlaceGem()
     {
-        if (currentGemCount < gemPositions.Length)
+        if (currentGemCount < gemPositions.Length && objectPickup != null)
         {
             GameObject gem = objectPickup.GetHeldObject();
-            gem.transform.position = gemPositions[currentGemCount].position;
-            gem.transform.rotation = gemPositions[currentGemCount].rotation;
-            gem.transform.parent = gemPositions[currentGemCount];
-            gem.GetComponent<Collider>().enabled = false; // Collider'ı devre dışı bırak
-            objectPickup.DropObject(gemPositions[currentGemCount].position);
-            currentGemCount++;
-
-            if (currentGemCount >= gemPositions.Length)
+            if (gem != null)
             {
-                ActivateExitDoor();
+                gem.transform.position = gemPositions[currentGemCount].position;
+                gem.transform.rotation = gemPositions[currentGemCount].rotation;
+                gem.transform.SetParent(gemPositions[currentGemCount]);
+                if (gem.TryGetComponent<Collider>(out var col))
+                {
+                    col.enabled = false; 
+                }
+                objectPickup.DropObject(gemPositions[currentGemCount].position);
+                currentGemCount++;
+
+                if (currentGemCount >= gemPositions.Length)
+                {
+                    ActivateExitDoor();
+                }
             }
         }
     }
 
-    void ActivateExitDoor()
+    private void ActivateExitDoor()
     {
-        exitDoor.SetActive(true); // Kapıyı aç
+        exitDoor.SetActive(true); 
         interactionText.text = "Exit Gate Opened!";
     }
 }
