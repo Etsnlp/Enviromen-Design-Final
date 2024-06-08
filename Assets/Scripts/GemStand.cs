@@ -5,7 +5,6 @@ public class GemStand : MonoBehaviour
 {
     [SerializeField] private Transform[] gemPositions; 
     [SerializeField] private GameObject exitDoor; 
-    [SerializeField] private TextMeshProUGUI interactionText; 
 
     private int currentGemCount = 0; 
     private bool isPlayerNear = false; 
@@ -13,7 +12,6 @@ public class GemStand : MonoBehaviour
 
     private void Start()
     {
-        interactionText.enabled = false; 
         exitDoor.SetActive(false); 
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -47,8 +45,7 @@ public class GemStand : MonoBehaviour
             if (objectPickup != null)
             {
                 objectPickup.dropNormal = false;
-            }
-            interactionText.enabled = true; 
+            } 
         }
     }
 
@@ -61,7 +58,6 @@ public class GemStand : MonoBehaviour
             {
                 objectPickup.dropNormal = true;
             }
-            interactionText.enabled = false; 
         }
     }
 
@@ -93,6 +89,5 @@ public class GemStand : MonoBehaviour
     private void ActivateExitDoor()
     {
         exitDoor.SetActive(true); 
-        interactionText.text = "Exit Gate Opened!";
     }
 }
