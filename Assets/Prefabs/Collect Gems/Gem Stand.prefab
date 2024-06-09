@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 1801469212386485992}
   - component: {fileID: 1801469212386485993}
   - component: {fileID: 1801469212386485990}
-  - component: {fileID: 6006380081219017802}
   m_Layer: 0
   m_Name: Gem Stand
   m_TagString: Untagged
@@ -150,20 +149,6 @@ MonoBehaviour:
   - {fileID: 1801469211719427061}
   - {fileID: 1801469212599196858}
   exitDoor: {fileID: 0}
-  interactionText: {fileID: 0}
---- !u!65 &6006380081219017802
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1801469212386485991}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1801469212455904730
 GameObject:
   m_ObjectHideFlags: 0
